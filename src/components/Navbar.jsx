@@ -22,15 +22,15 @@ const Navbar = () => {
     };
 
     return (
-        <nav>
-            <h1>Readlyst</h1>
-            <div>
+        <nav className='bg-gray-50 p-5 border-b border-gray-300 flex justify-between items-center text-black'>
+            <Link to='/'><h1 className='ml-23 text-xl font-bold'>Readlyst</h1></Link>
+            <div className='flex space-x-4 mr-23'>
                 <Link to='/'>Home</Link>
                 {user && (
                     <>
                     <Link to='/add-book'>Add Book</Link>
                     <Link to='/my-books'>My Book</Link>
-                    <button onClick={handleLogout} >Logout</button>
+                    <button onClick={handleLogout}>Logout</button>
                     </>
                 )}
                 {!user && (

@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 const serviceAccountPath = path.join(__dirname, '../readlyst-svc.json');
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 const upload = multer({storage: multer.memoryStorage()});
@@ -25,6 +25,10 @@ const bucket = storage.bucket("readlyst-bucket");
 const firestore = new Firestore({
     keyFilename: serviceAccountPath,
     projectId: "readlyst-26fb0",
+});
+
+app.get('/', (req, res) => {
+    console.log("Server is running");
 });
 
 app.post('/add-book', upload.single("cover"), (req, res) => {

@@ -41,16 +41,19 @@ const BookDetails = () => {
     }
 
     return (
-        <div>
-            <h2>{book.title}</h2>
-            <img 
-                src={book.imageUrl}
-                alt={book.title}
-            />
-            <p>Author: {book.author}</p>
-            <p>Price: ${book.price}</p>
-            <p>Description: {book.description}</p>
-            <p>Owner Email: {book.ownerEmail}</p>
+        <div className="max-w-3xl mx-auto p-6">
+            <div className="bg-white rounded-lg shadow p-6 flex flex-col items-center">
+                <img 
+                    src={book.imageUrl}
+                    alt={book.title}
+                    className="w-full max-h-96 object-contain rounded"
+                />
+                <h2 className="text-2xl font-bold text-gray-800 mt-4">{book.title}</h2>
+                <p className="text-gray-600 mt-2"><span className="font-semibold">Author: </span>{book.author}</p>
+                <p className="text-gray-600 mt-1"><span className="font-semibold">Price: </span>Rs.{book.price}</p>
+                <p className="text-gray-600 mt-1"><span className="font-semibold">Description: </span>{book.description}</p>
+                <p className="text-gray-600 mt-1"><span className="font-semibold">Owner Email: </span>{book.ownerEmail}</p>
+            </div>
         </div>
     );
 };
