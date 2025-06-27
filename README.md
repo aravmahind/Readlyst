@@ -24,7 +24,7 @@ Readlyst is a cloud-powered application that allows users to share, browse, and 
 
 ---
 
-### Project Workflow Summary
+## Project Workflow Summary
 
 1. The user logs in or registers via the frontend (authentication powered by Firebase).
 
