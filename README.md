@@ -46,29 +46,23 @@ This diagram visualizes the entire flow from user upload to data processing in t
 
 ## Cloud Services Used and Their Roles
 
-### Google Cloud Storage
+- **Cloud Storage**  
+  Used to store cover images of books. When a user uploads a cover, it gets stored in a publicly accessible Cloud Storage bucket, and its URL is saved in Firestore.
 
-Used to store cover images of books. When a user uploads a cover, it gets stored in a publicly accessible Cloud Storage bucket, and its URL is saved in Firestore.
+- **Firestore**  
+  Acts as the primary NoSQL database. It stores book metadata like title, author, price, description, owner info, and the image URL. Firestore is serverless and scales automatically.
 
-### Firestore
+- **Compute Engine (VM)**  
+  Hosts the Express backend server. It handles API requests, uploads images to Cloud Storage, saves book details to Firestore, and publishes messages to Pub/Sub.
 
-Acts as our primary NoSQL database. It stores book metadata like title, author, price, description, owner info, and image URL. Firestore is serverless and scales automatically.
+- **Pub/Sub**  
+  Enables an event-driven architecture. After a book is uploaded, the backend publishes a message to the `book-uploaded` topic. This allows asynchronous processing such as logging or future notifications, without blocking the user's request.
 
-### Compute Engine (VM)
+- **Cloud Functions**  
+  Subscribed to the Pub/Sub topic. Every time a book is uploaded, the Cloud Function is triggered and receives the metadata. It's responsible for backend tasks that don't require real-time execution, such as storing logs in BigQuery.
 
-Used to host the Express backend server. It handles API requests, uploads images, saves book details, and triggers Pub/Sub messages.
-
-### Pub/Sub
-
-Used for decoupled, event-driven architecture. After a book is uploaded, the backend sends a message to the `book-uploaded` topic. This allows asynchronous processing, like logging or notifications, without blocking the main request.
-
-### Cloud Functions
-
-Subscribed to the Pub/Sub topic. Whenever a book is uploaded, the function is triggered with book metadata. It is responsible for processing tasks that don't need to happen in real-time, such as writing logs to BigQuery.
-
-### BigQuery
-
-Used for logging and analytics. The function logs each book upload as a new row in the `book_uploads` table in the `readlyst_dataset` dataset. This makes it easy to analyze trends, generate reports, or integrate with dashboards like Looker Studio.
+- **BigQuery**  
+  Used for logging and analytics. The Cloud Function logs each book upload into the `book_uploads` table within the `readlyst_dataset`. This enables data analysis, dashboard integration (e.g., Looker Studio), and insights on user activity or platform usage.
 
 ---
 
