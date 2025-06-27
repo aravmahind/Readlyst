@@ -30,7 +30,7 @@ const AddBook = () => {
         formData.append("ownerEmail", user.email);
 
         try {
-            const res = await fetch("http://localhost:5000/add-book", {
+            const res = await fetch("http://34.93.58.74:5000/add-book", {
                 method: "POST",
                 body: formData,
             });
