@@ -15,8 +15,11 @@ Readlyst is a cloud-powered application that allows users to share, browse, and 
 ### Backend
 - Node.js with Express.js
 - Multer (for file uploads)
+
+### Cloud Services
 - Google Cloud Storage (GCS)
 - Firestore (NoSQL DB)
+- Compute Engine (VM)
 - Pub/Sub (Event-based messaging)
 - Cloud Functions (Serverless processing)
 - BigQuery (Analytics & logging)
