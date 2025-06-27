@@ -22,17 +22,20 @@ Readlyst is a cloud-powered application that allows users to share, browse, and 
 
 ---
 
-## Project Workflow Summary
+### Project Workflow Summary
 
-1. User uploads a book along with the cover image using the web frontend.
-2. The frontend sends the data to the backend API hosted on a Virtual Machine (VM).
-3. The backend:
-
-   * Uploads the image to Google Cloud Storage.
-   * Stores book details in Firestore.
-   * Publishes a message to a Pub/Sub topic for further processing.
-4. A Cloud Function subscribed to the topic receives the message asynchronously.
-5. The Cloud Function logs the uploaded book details to BigQuery for analytics and monitoring.
+1. The user logs in or registers via the frontend (authentication powered by Firebase).
+2. Once authenticated, the user can:
+   - Browse books uploaded by others (fetched from Firestore).
+   - Or upload their own book for sale or donation.
+3. When uploading a book:
+   - The frontend sends book details and the cover image to the backend (running on a VM).
+   - The backend:
+     - Uploads the image to Google Cloud Storage.
+     - Stores metadata in Firestore.
+     - Publishes a message to a Pub/Sub topic for asynchronous processing.
+4. A Cloud Function subscribed to the topic receives the message.
+5. That function logs the book upload data to BigQuery for future analytics and reporting.
 
 ---
 
