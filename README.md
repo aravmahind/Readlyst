@@ -2,6 +2,7 @@
 
 Readlyst is a cloud-powered application that allows users to share, browse, and discover books uploaded by others. Users can upload a book with a cover image and details like title, author, and price. The platform stores and processes this data using modern Google Cloud services, ensuring scalability and real-time operations.
 
+
 ---
 
 ## Tech Stack
@@ -20,22 +21,28 @@ Readlyst is a cloud-powered application that allows users to share, browse, and 
 - Cloud Functions (Serverless processing)
 - BigQuery (Analytics & logging)
 
+
 ---
 
 ### Project Workflow Summary
 
 1. The user logs in or registers via the frontend (authentication powered by Firebase).
+
 2. Once authenticated, the user can:
    - Browse books uploaded by others (fetched from Firestore).
    - Or upload their own book for sale or donation.
+
 3. When uploading a book:
    - The frontend sends book details and the cover image to the backend (running on a VM).
    - The backend:
      - Uploads the image to Google Cloud Storage.
      - Stores metadata in Firestore.
      - Publishes a message to a Pub/Sub topic for asynchronous processing.
+
 4. A Cloud Function subscribed to the topic receives the message.
+
 5. That function logs the book upload data to BigQuery for future analytics and reporting.
+
 
 ---
 
@@ -44,6 +51,7 @@ Readlyst is a cloud-powered application that allows users to share, browse, and 
 ![image](https://github.com/user-attachments/assets/4571a47f-4260-4f47-abd7-85c958227ee6)
 
 This diagram visualizes the entire flow from user upload to data processing in the cloud. It includes the frontend hosted on Cloud Storage, the backend running on Compute Engine, and the cloud-native services used for data handling and logging.
+
 
 ---
 
@@ -67,6 +75,7 @@ This diagram visualizes the entire flow from user upload to data processing in t
 - **BigQuery**  
   Used for logging and analytics. The Cloud Function logs each book upload into the `book_uploads` table within the `readlyst_dataset`. This enables data analysis, dashboard integration (e.g., Looker Studio), and insights on user activity or platform usage.
 
+
 ---
 
 ## Credits
@@ -74,3 +83,4 @@ This diagram visualizes the entire flow from user upload to data processing in t
 * **Arav Mahind** - Idea, development, and deployment of the full Readlyst project.
 * **Google Cloud** - Providing the backend services powering the architecture.
 * **ChatGPT (OpenAI)** - Assisted in designing architecture, debugging, and setting up cloud integrations.
+
