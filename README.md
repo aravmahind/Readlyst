@@ -83,10 +83,10 @@ This diagram visualizes the entire flow from user upload to data processing in t
 bash
 Copy
 Edit
-# For frontend
+### For frontend
 npm install
 
-# For backend
+### For backend
 cd server
 npm install
 
