@@ -8,8 +8,7 @@ Readlyst is a cloud-powered application that allows users to share, browse, and 
 ## Tech Stack
 
 ### Frontend
-- React.js (with Vite)
-- React Router DOM
+- React.js (Vite, React Router)
 - Tailwind CSS
 
 ### Backend
