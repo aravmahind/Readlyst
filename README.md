@@ -1,72 +1,61 @@
-# Readlyst Project
+# Readlyst - Cloud-native Book Sharing Platform
 
-Readlyst is a book listing and sharing platform that allows people to add book details, including a cover image, and browse available books online. It consists of a **frontend** built with React and a **backend** using Node.js, Express, and Firestore. All images are stored in a **Google Cloud Storage** bucket, making it ideal for a fully serverless and cloud-backed application.
+Readlyst is a cloud-powered application that allows users to share, browse, and discover books uploaded by others. Users can upload a book with a cover image and details like title, author, and price. The platform stores and processes this data using modern Google Cloud services, ensuring scalability and real-time operations.
 
-## Features
+---
 
-*  Add a book with its cover, title, author, and price
-*  Store book images securely in GCS
-*  List available books with title, author, and cover image
-*  Fully connected with Firestore for data storage
-*  Responsive design built with React and hosted on GCS
+## Project Workflow Summary
 
-## Architecture
+1. User uploads a book along with the cover image using the web frontend.
+2. The frontend sends the data to the backend API hosted on a Virtual Machine (VM).
+3. The backend:
 
-* **Frontend**: React app (hosted on GCS)
-* **Backend**: Node.js + Express server (hosted on a VM)
-* **Database**: Firestore (Google Cloud)
-* **Storage**: GCS Bucket for cover images
+   * Uploads the image to Google Cloud Storage.
+   * Stores book details in Firestore.
+   * Publishes a message to a Pub/Sub topic for further processing.
+4. A Cloud Function subscribed to the topic receives the message asynchronously.
+5. The Cloud Function logs the uploaded book details to BigQuery for analytics and monitoring.
 
-## Getting Started
+---
 
-### Install Dependencies
+## Application Architecture Diagram
 
-```bash
-npm install
-```
+![image](https://github.com/user-attachments/assets/4571a47f-4260-4f47-abd7-85c958227ee6)
 
-### Configure Service Account
+This diagram visualizes the entire flow from user upload to data processing in the cloud. It includes the frontend hosted on Cloud Storage, the backend running on Compute Engine, and the cloud-native services used for data handling and logging.
 
-* Put your `readlyst-svc.json` service account file in the server directory.
+---
 
-### Run the Server
+## Cloud Services Used and Their Roles
 
-```bash
-node server.js
-```
+### Google Cloud Storage
 
-Server will run on `http://localhost:5000`
+Used to store cover images of books. When a user uploads a cover, it gets stored in a publicly accessible Cloud Storage bucket, and its URL is saved in Firestore.
 
-### Build and Upload the Frontend
+### Firestore
 
-```bash
-npm run build
-```
+Acts as our primary NoSQL database. It stores book metadata like title, author, price, description, owner info, and image URL. Firestore is serverless and scales automatically.
 
-Upload `dist` directory to your GCS bucket:
+### Compute Engine (VM)
 
-```bash
-gsutil cp -r dist/* gs://readlyst-frontend/
-gsutil web set -m index.html -e index.html gs://readlyst-frontend/
-```
+Used to host the Express backend server. It handles API requests, uploads images, saves book details, and triggers Pub/Sub messages.
 
-### Usage
+### Pub/Sub
 
-* Open the GCS site link for the frontend.
-* Add a book from the form.
-* Book details and cover image get stored in Firestore and GCS.
+Used for decoupled, event-driven architecture. After a book is uploaded, the backend sends a message to the `book-uploaded` topic. This allows asynchronous processing, like logging or notifications, without blocking the main request.
 
-## Notes
+### Cloud Functions
 
-* Ensure you have a valid GCP account and billing enabled.
-* Always update IP addresses in the frontend for making API calls.
-* Maintain `.env` and service account files securely.
+Subscribed to the Pub/Sub topic. Whenever a book is uploaded, the function is triggered with book metadata. It is responsible for processing tasks that don't need to happen in real-time, such as writing logs to BigQuery.
 
-## Technologies Used
+### BigQuery
 
-* Node.js / Express
-* React / Vite
-* Firestore
-* GCS
+Used for logging and analytics. The function logs each book upload as a new row in the `book_uploads` table in the `readlyst_dataset` dataset. This makes it easy to analyze trends, generate reports, or integrate with dashboards like Looker Studio.
 
-Thank you for checking out Readlyst! Enjoy listing and exploring books online!
+---
+
+## Credits
+
+* **Arav Mahind** - Idea, development, and deployment of the full Readlyst project.
+* **Google Cloud** - Providing the backend services powering the architecture.
+* **ChatGPT (OpenAI)** - Assisted in designing architecture, debugging, and setting up cloud integrations.
