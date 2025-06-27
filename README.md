@@ -78,7 +78,7 @@ This diagram visualizes the entire flow from user upload to data processing in t
 
 ---
 
-## Credits
+## Contributors
 
 * **Arav Mahind** - Idea, development, and deployment of the full Readlyst project.
 * **Google Cloud** - Providing the backend services powering the architecture.
