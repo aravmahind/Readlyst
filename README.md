@@ -84,4 +84,4 @@ This diagram visualizes the entire flow from user upload to data processing in t
 
 * **Arav Mahind** - Idea, development, and deployment of the full Readlyst project.
 * **Google Cloud** - Providing the backend services powering the architecture.
-* **ChatGPT (OpenAI)** - Assisted in designing architecture, debugging, and setting up cloud integrations.
+* **ChatGPT (OpenAI)** - Assisted in architecture, debugging, and setting up cloud integrations.
